@@ -1,0 +1,82 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+using namespace std;
+
+char* convert(char* number, int initial_base, int need_base) {
+    char* pos, * temp;
+    long number1 = 0;
+    int digit;
+
+    pos = number;
+
+    while (*pos++ = toupper(*pos));
+    pos = number;
+
+    while (*pos) {
+        if ((*pos >= '0') && (*pos <= '9')) {
+            if ((*pos - '0') >= initial_base) {
+                puts("Incorrect number");
+                exit(1);
+            }
+            number1 = *pos - '0' + number1 * initial_base;
+        }
+        if ((*pos >= 'A') && (*pos <= 'Z')) {
+            if ((*pos - 'A' + 10) >= initial_base) {
+                puts("Incorrect number");
+                exit(1);
+            }
+            number1 = *pos - 'A' + 10 + number1 * initial_base;
+        }
+        ++pos;
+    }
+    pos = number;
+
+    while (number1) {
+        digit = number1 % need_base;
+        if (digit < 10)
+            *pos = digit + '0';
+        else
+            *pos = digit + 'A' - 10;
+        number1 /= need_base;
+        ++pos;
+    }
+    *pos = '\0';
+    --pos;
+    temp = number;
+    while (pos > temp) {
+        digit = *pos;
+        *pos = *temp;
+        *temp = digit;
+        --pos;
+        ++temp;
+    }
+    return number;
+}
+
+int main(void) {
+    std::cout << "This is the program to transfer from one number system to another\n";
+
+    int initial_base, need_base;
+    char number[100];
+    
+
+    cout << "Input Number:  " << endl;
+    cin >> number;
+
+    do {
+        cout << "Input Base of Input Number (from 2 to 16):  " << endl;
+        cin >> initial_base;
+    } while (initial_base < 2 && initial_base > 16);
+
+    do {
+        cout << "Input Needed Base of Number (from 2 to 16): " << endl;
+        cin >> need_base;
+
+    } while (need_base < 2 && need_base > 16);
+
+        cout << "Result of transfer: " << convert(number, initial_base, need_base)<< endl;
+
+    return 0;
+}
